@@ -3,9 +3,14 @@ import logging
 from django.conf import settings
 from django.db.models.signals import post_save
 
+from wagtail import VERSION as WAGTAIL_VERSION
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from wagtail.core.models import Collection
-from wagtail.documents.models import get_document_model
+
+if WAGTAIL_VERSION < (2, 8):
+    from wagtail.documents.models import get_document_model
+else:
+    from wagtail.documents import get_document_model
 
 from wagtail_storages.utils import is_s3_boto3_storage_used
 
